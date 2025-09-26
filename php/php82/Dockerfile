@@ -27,13 +27,22 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 RUN docker-php-ext-install zip intl mysqli pdo_mysql
 
 # Install Memcached extension
-RUN pecl install memcached && docker-php-ext-enable memcached
+RUN apt-get update && apt-get install -y libmemcached-dev zlib1g-dev && pecl install memcached && docker-php-ext-enable memcached
 
-# Install Xdebug
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+# Install Redis extension
+RUN pecl install redis && docker-php-ext-enable redis
 
-# Copy Xdebug config
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+# Install Xdebug and enable it
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
 CMD ["php-fpm"]
