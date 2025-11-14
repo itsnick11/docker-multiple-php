@@ -101,6 +101,7 @@ services:
       - "www.smartbuyglasses.co.id:192.168.100.4"
       - "www.smartbuyglasses.com.ar:192.168.100.4"
       - "www.smartbuyglasses.ae:192.168.100.4"
+      - "www.smartbuyglasses.info:192.168.100.4"
       - "omlocal.motionglobal.com:192.168.100.4"
 
   php82:
@@ -160,6 +161,7 @@ services:
       - "www.smartbuyglasses.co.id:192.168.100.4"
       - "www.smartbuyglasses.com.ar:192.168.100.4"
       - "www.smartbuyglasses.ae:192.168.100.4"
+      - "www.smartbuyglasses.info:192.168.100.4"
       - "www.smartbuyglasses.la:192.168.100.4"
       - "omlocal.motionglobal.com:192.168.100.4"
     
