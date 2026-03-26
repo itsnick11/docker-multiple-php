@@ -47,6 +47,8 @@ services:
     container_name: php74_fpm
     environment:
       - TZ=Asia/Ho_Chi_Minh
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     volumes:
       - ./logs/php/php74:/var/log/php
       - ./php/php74/php.ini:/usr/local/etc/php/php.ini
@@ -109,6 +111,8 @@ services:
     container_name: php82_fpm
     environment:
       - TZ=Asia/Ho_Chi_Minh
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     volumes:
       - ./logs/php/php82:/var/log/php
       - ./php/php82/php.ini:/usr/local/etc/php/php.ini
@@ -179,6 +183,17 @@ services:
       custom_network:
         ipv4_address: 192.168.100.11  # Static IP for Memcached
         
+  elpis-app:
+    build: ./elpis
+    container_name: elpis-app
+    volumes:
+      - ./www/html/elpis/src_v2:/var/www/html/elpis
+    ports:
+      - "3000"
+    networks:
+      custom_network:
+        ipv4_address: 192.168.100.22  # Static IP for Search App
+    #extra_hosts: 
   # redis:
   #   image: redis:6.2.13
   #   container_name: redis
