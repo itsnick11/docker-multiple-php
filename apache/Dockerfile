@@ -17,7 +17,9 @@ COPY certs/apache-selfsigned.crt /etc/apache2/ssl/apache-selfsigned.crt
 COPY certs/apache-selfsigned.key /etc/apache2/ssl/apache-selfsigned.key
 
 # Copy updated Virtual Host configuration
-COPY vhost.conf /etc/apache2/sites-enabled/000-default.conf
+#COPY vhost.conf /etc/apache2/sites-enabled/000-default.conf
+RUN rm /etc/apache2/sites-enabled/000-default.conf
+RUN ln -s /etc/apache2/custom/vhost.conf /etc/apache2/sites-enabled/000-default.conf
 
 EXPOSE 80 443
 
